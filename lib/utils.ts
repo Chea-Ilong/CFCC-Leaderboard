@@ -170,7 +170,7 @@ export function transformCandidateToLeaderboardEntry(candidate: CandidateData, i
   const validTotalScore = isNaN(totalScore) ? 0 : Math.round(totalScore)
 
   // Generate group assignment from the name
-  const group = candidate.group
+  const group = `G${candidate.group}`
 
   return {
     id: index + 1,
