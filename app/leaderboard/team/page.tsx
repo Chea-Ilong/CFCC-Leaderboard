@@ -43,7 +43,7 @@ export default function TeamLeaderboardPage() {
         {/* Header */}
         <div className="text-center hidden md:block mb-12 lg:mb-16">
           <h1 className="text-4xl lg:text-6xl font-semibold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-6 leading-tight">
-            CADT Freshman Coding Competition
+            CADT Freshman Coding Championship
           </h1>
         </div>
 

@@ -96,7 +96,7 @@ export function TeamLeaderboardRow({ team }: TeamLeaderboardRowProps) {
               <div className="font-bold text-lg sm:text-xl truncate" style={{ color: COLORS.SECONDARY }}>
                 {safeTeam.teamName}
               </div>
-              <div className="text-sm sm:text-base text-gray-600 font-medium">Team Competition</div>
+              <div className="text-sm sm:text-base text-gray-600 font-medium">Team Championship</div>
             </div>
           </div>
           <div className="text-right flex-shrink-0">

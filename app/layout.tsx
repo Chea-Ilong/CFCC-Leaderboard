@@ -4,8 +4,8 @@ import { Navigation } from "@/components/layout/navigation"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "CADT Freshman Coding Competition",
-  description: "Live leaderboard for CADT Freshman Coding Competition",
+  title: "CADT Freshman Coding Championship",
+  description: "Live leaderboard for CADT Freshman Coding Championship",
   generator: "v0.dev",
 }
 
