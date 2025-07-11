@@ -94,7 +94,7 @@ export function useRound1Leaderboard() {
   useEffect(() => {
     mounted.current = true
     fetchData()
-    const id = setInterval(() => fetchData(true), 5000)
+    const id = setInterval(() => fetchData(true), 300000)  
     return () => {
       mounted.current = false
       clearInterval(id)
