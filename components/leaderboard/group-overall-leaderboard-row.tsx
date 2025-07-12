@@ -60,32 +60,32 @@ export function GroupOverallLeaderboardRow({ entry, rank }: GroupOverallLeaderbo
 
         {/* Round 1 Score */}
         <div className="text-center">
-          <div className="font-semibold text-lg text-gray-900">{entry.round1Score}</div>
+          <div className="font-semibold text-lg text-gray-900">{Math.round(entry.round1Score)}</div>
           <div className="text-xs text-gray-500">Round 1</div>
         </div>
 
         {/* Round 2 Score */}
         <div className="text-center">
-          <div className="font-semibold text-lg text-gray-900">{entry.round2Score}</div>
+          <div className="font-semibold text-lg text-gray-900">{Math.round(entry.round2Score)}</div>
           <div className="text-xs text-gray-500">Round 2</div>
         </div>
 
         {/* Team Score */}
         <div className="text-center">
-          <div className="font-semibold text-lg text-gray-900">{entry.teamScore}</div>
+          <div className="font-semibold text-lg text-gray-900">{Math.round(entry.teamScore)}</div>
           <div className="text-xs text-gray-500">Team</div>
         </div>
 
         {/* Game Score */}
         <div className="text-center">
-          <div className="font-semibold text-lg text-gray-900">{entry.gameScore}</div>
+          <div className="font-semibold text-lg text-gray-900">{Math.round(entry.gameScore)}</div>
           <div className="text-xs text-gray-500">Game</div>
         </div>
 
         {/* Total Score */}
         <div className="text-center">
           <div className="font-bold text-2xl" style={{ color: COLORS.PRIMARY }}>
-            {entry.totalScore}
+            {Math.round(entry.totalScore)}
           </div>
           <div className="text-xs text-gray-500">Total</div>
         </div>
@@ -108,7 +108,7 @@ export function GroupOverallLeaderboardRow({ entry, rank }: GroupOverallLeaderbo
           </div>
           <div className="text-right">
             <div className="font-bold text-xl" style={{ color: COLORS.PRIMARY }}>
-              {entry.totalScore}
+              {Math.round(entry.totalScore * 100) / 100}
             </div>
             <div className="text-xs text-gray-500">Total</div>
           </div>
@@ -117,19 +117,19 @@ export function GroupOverallLeaderboardRow({ entry, rank }: GroupOverallLeaderbo
         {/* Scores Grid */}
         <div className="grid grid-cols-2 gap-4">
           <div className="text-center p-3 bg-gray-50 rounded-lg">
-            <div className="font-semibold text-lg text-gray-900">{entry.round1Score}</div>
+            <div className="font-semibold text-lg text-gray-900">{Math.round(entry.round1Score)}</div>
             <div className="text-xs text-gray-500">Round 1</div>
           </div>
           <div className="text-center p-3 bg-gray-50 rounded-lg">
-            <div className="font-semibold text-lg text-gray-900">{entry.round2Score}</div>
+            <div className="font-semibold text-lg text-gray-900">{Math.round(entry.round2Score)}</div>
             <div className="text-xs text-gray-500">Round 2</div>
           </div>
           <div className="text-center p-3 bg-gray-50 rounded-lg">
-            <div className="font-semibold text-lg text-gray-900">{entry.teamScore}</div>
+            <div className="font-semibold text-lg text-gray-900">{Math.round(entry.teamScore)}</div>
             <div className="text-xs text-gray-500">Team</div>
           </div>
           <div className="text-center p-3 bg-gray-50 rounded-lg">
-            <div className="font-semibold text-lg text-gray-900">{entry.gameScore}</div>
+            <div className="font-semibold text-lg text-gray-900">{Math.round(entry.gameScore)}</div>
             <div className="text-xs text-gray-500">Game</div>
           </div>
         </div>

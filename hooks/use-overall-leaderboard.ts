@@ -43,11 +43,11 @@ export function useOverallLeaderboard() {
           fullName: result.fullName,
           hackerRankId: result.fullName, // Use fullName as hackerRankId
           group: `G${result.group}`, // Convert number to group format
-          round1Score: result.round1,
-          round2Score: result.round2,
-          teamScore: result.teamScore,
-          gameScore: result.bonusScore, // Changed from bonus to gameScore
-          totalPoints: result.totalScore,
+          round1Score: Math.round(result.round1),
+          round2Score: Math.round(result.round2),
+          teamScore: Math.round(result.teamScore),
+          gameScore: Math.round(result.bonusScore), // Changed from bonus to gameScore
+          totalPoints: Math.round(result.totalScore), // Round to 2 decimal places
         }))
         .sort((a, b) => b.totalPoints - a.totalPoints) // Sort by total score descending
         .map((entry, index) => ({ ...entry, rank: index + 1 })) // Recalculate ranks
