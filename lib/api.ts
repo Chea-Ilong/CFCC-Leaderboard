@@ -231,93 +231,145 @@ const USE_MOCK_DATA = false
 
 export async function getAllParticipantIndividualRoundOne() {
   try {
-    const response = await axios.get(process.env.NEXT_PUBLIC_HACKERRANK_ROUND1_URL + "/candidates", {
-      headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}` },
-    })
+    // Fetch first 100
+    const response1 = await axios.get(
+      `${process.env.NEXT_PUBLIC_HACKERRANK_ROUND1_URL}/candidates?limit=100`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+        },
+      }
+    );
 
-    const apiData: APIEntry[] = response.data.data
+    // Fetch next 100 (offset = 100)
+    const response2 = await axios.get(
+      `${process.env.NEXT_PUBLIC_HACKERRANK_ROUND1_URL}/candidates?limit=99&offset=100`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+        },
+      }
+    );
 
-    const firebaseResponse = await axios.get(`${process.env.NEXT_PUBLIC_FIREBASE_URL}/participants.json`)
-    const firebaseList: Participant[] = Object.values(firebaseResponse.data || {})
+    // Combine both results
+    const apiData: APIEntry[] = [
+      ...response1.data.data,
+      ...response2.data.data,
+    ];
 
-    // Get question ID → index mapping
+    // Firebase participants
+    const firebaseResponse = await axios.get(
+      `${process.env.NEXT_PUBLIC_FIREBASE_URL}/participants.json`
+    );
+    const firebaseList: Participant[] = Object.values(firebaseResponse.data || {});
+
+    // Question ID to label mapping
     const roundInfoResponse = await axios.get(process.env.NEXT_PUBLIC_HACKERRANK_ROUND1_URL!, {
-      headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}` },
-    })
-    const questionIdObj = roundInfoResponse.data.questions
-    const questionIdList = Object.values(questionIdObj) as string[]
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+      },
+    });
 
-    const questionIdMap: Record<string, string> = {}
+    const questionIdObj = roundInfoResponse.data.questions;
+    const questionIdList = Object.values(questionIdObj) as string[];
+
+    const questionIdMap: Record<string, string> = {};
     questionIdList.forEach((id, index) => {
-      questionIdMap[id] = `q${index + 1}`
-    })
+      questionIdMap[id] = `q${index + 1}`;
+    });
 
     const result = firebaseList.map((participant) => {
-      const hrData = apiData.find((item) => item.email === participant.email)
+      const hrData = apiData.find((item) => item.email === participant.email);
 
-      const renamedQuestions: Record<string, number> = {}
+      const renamedQuestions: Record<string, number> = {};
       for (const [qid, score] of Object.entries(hrData?.questions || {})) {
-        const label = questionIdMap[qid] || qid // fallback to raw ID if no mapping
-        renamedQuestions[label] = Number(score)
+        const label = questionIdMap[qid] || qid;
+        renamedQuestions[label] = Number(score);
       }
-    
+
       return {
         fullName: emailToFullName(participant.email),
         group: participant.group || 0,
         questions: renamedQuestions,
         totalScore: hrData?.score || 0,
-      }
-    })
+      };
+    });
 
-    return result
+    return result;
   } catch (error) {
-    console.error("Error fetching Round 1 data, falling back to mock data:", error)
+    console.error("Error fetching Round 1 data, falling back to mock data:", error);
   }
 }
 
 export async function getAllParticipantIndividualRoundTwo() {
   try {
-    const response = await axios.get(process.env.NEXT_PUBLIC_HACKERRANK_ROUND2_URL + "/candidates", {
-      headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}` },
-    })
+    // Fetch first 100
+    const response1 = await axios.get(
+      `${process.env.NEXT_PUBLIC_HACKERRANK_ROUND2_URL}/candidates?limit=100`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+        },
+      }
+    );
 
-    const apiData: APIEntry[] = response.data.data
+    // Fetch next 100 (offset = 100)
+    const response2 = await axios.get(
+      `${process.env.NEXT_PUBLIC_HACKERRANK_ROUND2_URL}/candidates?limit=99&offset=100`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+        },
+      }
+    );
 
-    const firebaseResponse = await axios.get(`${process.env.NEXT_PUBLIC_FIREBASE_URL}/participants.json`)
-    const firebaseList: Participant[] = Object.values(firebaseResponse.data || {})
+    // Combine both results
+    const apiData: APIEntry[] = [
+      ...response1.data.data,
+      ...response2.data.data,
+    ];
 
-    // Get question ID → index mapping
+    // Firebase participants
+    const firebaseResponse = await axios.get(
+      `${process.env.NEXT_PUBLIC_FIREBASE_URL}/participants.json`
+    );
+    const firebaseList: Participant[] = Object.values(firebaseResponse.data || {});
+
+    // Question ID to label mapping
     const roundInfoResponse = await axios.get(process.env.NEXT_PUBLIC_HACKERRANK_ROUND2_URL!, {
-      headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}` },
-    })
-    const questionIdObj = roundInfoResponse.data.questions
-    const questionIdList = Object.values(questionIdObj) as string[]
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+      },
+    });
 
-    const questionIdMap: Record<string, string> = {}
+    const questionIdObj = roundInfoResponse.data.questions;
+    const questionIdList = Object.values(questionIdObj) as string[];
+
+    const questionIdMap: Record<string, string> = {};
     questionIdList.forEach((id, index) => {
-      questionIdMap[id] = `q${index + 1}`
-    })
+      questionIdMap[id] = `q${index + 1}`;
+    });
 
     const result = firebaseList.map((participant) => {
-      const hrData = apiData.find((item) => item.email === participant.email)
+      const hrData = apiData.find((item) => item.email === participant.email);
 
-      const renamedQuestions: Record<string, number> = {}
+      const renamedQuestions: Record<string, number> = {};
       for (const [qid, score] of Object.entries(hrData?.questions || {})) {
-        const label = questionIdMap[qid] || qid // fallback to raw ID if no mapping
-        renamedQuestions[label] = Number(score)
+        const label = questionIdMap[qid] || qid;
+        renamedQuestions[label] = Number(score);
       }
-    
+
       return {
         fullName: emailToFullName(participant.email),
         group: participant.group || 0,
         questions: renamedQuestions,
         totalScore: hrData?.score || 0,
-      }
-    })
+      };
+    });
 
-    return result
+    return result;
   } catch (error) {
-    console.error("Error fetching Round 2 data, falling back to mock data:", error)
+    console.error("Error fetching Round 1 data, falling back to mock data:", error);
   }
 }
 
@@ -334,10 +386,13 @@ export async function getAllParticipantTeamRound() {
     })
 
     // Fetch candidates
-    const response = await axios.get(process.env.NEXT_PUBLIC_HACKERRANK_ROUND_TEAM_URL + "/candidates", {
+    const response1 = await axios.get(process.env.NEXT_PUBLIC_HACKERRANK_ROUND_TEAM_URL + "/candidates?limit=100", {
       headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}` },
     })
-    const apiData: APIEntry[] = response.data.data
+    const response2 = await axios.get(process.env.NEXT_PUBLIC_HACKERRANK_ROUND_TEAM_URL + "/candidates?limit=99&offset=100", {
+      headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}` },
+    })
+    const apiData: APIEntry[] = [...response1.data.data, ...response2.data.data]
 
     const scoreMap = new Map<string, { score: number; questions: any }>()
     for (const item of apiData) {
